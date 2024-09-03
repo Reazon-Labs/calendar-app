@@ -1,10 +1,11 @@
 import SwiftUI
 
 public struct ContentView: View {
-    public init() {}
-
+    @State private var currentDate = Date()
+    
     public var body: some View {
-        Text("Hello pupuce")
+        CalendarView(currentDate: $currentDate)
+            .padding()
     }
 }
 
