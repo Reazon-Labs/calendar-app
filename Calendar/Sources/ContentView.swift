@@ -2,9 +2,10 @@ import SwiftUI
 
 public struct ContentView: View {
     @State private var currentDate = Date()
-    
+    @State private var presentation = CalendarViewPresentation.week
+
     public var body: some View {
-        CalendarView(currentDate: $currentDate)
+        CalendarView(currentDate: $currentDate, presentation: $presentation)
             .padding()
     }
 }
