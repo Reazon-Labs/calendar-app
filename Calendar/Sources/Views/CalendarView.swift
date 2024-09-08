@@ -7,9 +7,7 @@ struct CalendarView: View {
     
     private let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     
-    private let weekColumnsLayout: [GridItem] = [
-        GridItem(.fixed(80), spacing: 0)
-    ] + Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
+    private let weekColumnsLayout: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
     
     var body: some View {
         switch presentation {
@@ -32,52 +30,59 @@ struct CalendarView: View {
             .padding([.leading], 80)
             
             ScrollView {
-                LazyVGrid(columns: weekColumnsLayout, spacing: 0) {
+                HStack {
                     VStack(spacing: 0) {
                         ForEach(0..<24) { hour in
                              Text("\(hour):00")
-                                .padding([.trailing], 8)
+                                .padding([.trailing], 5)
                                 .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: .trailing)
                                 .frame(maxHeight: .infinity, alignment: .bottom)
+                                .offset(y:8)
                         }
                     }
-
-                    ForEach(0..<7) { i in
-                        HStack {
-                            VStack(spacing: 0) {
-                                ForEach(0..<24) { hour in
-                                    Text("")
-                                        .frame(maxWidth: .infinity)
-                                        .frame(height: 80)
-                                        .overlay(
-                                            Rectangle()
-                                                .frame(height: hour == 0 ? 1 : 0.5, alignment: .top)
-                                                .foregroundColor(.gray),
-                                            alignment: .top
-                                        )
-                                        .overlay(
-                                            Rectangle()
-                                                .frame(height: hour == 23 ? 1 : 0.5, alignment: .bottom)
-                                                .foregroundColor(.gray),
-                                            alignment: .bottom
-                                        )
+                    .frame(width: 80, alignment: .leading)
+                    
+                    LazyVGrid(columns: weekColumnsLayout, spacing: 0) {
+                        ForEach(0..<7) { i in
+                            HStack {
+                                VStack(spacing: 0) {
+                                    ForEach(0..<24) { hour in
+                                        Text("")
+                                            .frame(maxWidth: .infinity)
+                                            .frame(height: 80)
+                                            .overlay(
+                                                Rectangle()
+                                                    .frame(height: hour == 0 ? 1 : 0.5, alignment: .top)
+                                                    .foregroundColor(.gray),
+                                                alignment: .top
+                                            )
+                                            .overlay(
+                                                Rectangle()
+                                                    .frame(height: hour == 23 ? 1 : 0.5, alignment: .bottom)
+                                                    .foregroundColor(.gray),
+                                                alignment: .bottom
+                                            )
+                                    }
                                 }
+                                .overlay(
+                                    Rectangle()
+                                        .frame(width: i == 0 ? 1 : 0.5, alignment: .leading)
+                                        .foregroundColor(.gray),
+                                    alignment: .leading
+                                )
+                                 .overlay(
+                                    Rectangle()
+                                        .frame(width: i == 6 ? 1 : 0.5, alignment: .trailing)
+                                        .foregroundColor(.gray),
+                                    alignment: .trailing
+                                )
                             }
-                            .overlay(
-                                Rectangle()
-                                    .frame(width: i == 0 ? 1 : 0.5, alignment: .leading)
-                                    .foregroundColor(.gray),
-                                alignment: .leading
-                            )
-                             .overlay(
-                                Rectangle()
-                                    .frame(width: i == 6 ? 1 : 0.5, alignment: .trailing)
-                                    .foregroundColor(.gray),
-                                alignment: .trailing
-                            )
                         }
                     }
+                    .frame(maxWidth: .infinity)
                 }
+                .frame(maxWidth: .infinity)
+                .padding([.bottom], 8)
             }
             .scrollIndicators(.never)
         }
