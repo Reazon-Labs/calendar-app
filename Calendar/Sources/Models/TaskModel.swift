@@ -6,10 +6,10 @@ struct TaskModel {
     var deadline: Date?
     var estimatedTime: Int = 30
     var priority: TaskPriority = .None
-    var doDates: [Date]
+    var doDates: [Date]?
     var body: String?
     var isProject: Bool = false
-    var subtasks: [TaskModel]
+    var subtasks: [TaskModel]?
     var done: Bool = false
 }
 

@@ -43,4 +43,25 @@ public struct DateUtils {
     public static func weekDayFromMonday(_ day: Int) -> Int {
         return day == 1 ? 7 : day-1
     }
+    
+    /// Convert minutes to hours entirely
+    ///  - Parameter minutes: The amount of minutes to convert
+    ///  - Returns: Minutes converted to hours with a floating point
+    public static func minutesToHours(_ minutes: Int) -> Float {
+        let minFloat = Float(minutes)
+        
+        return minFloat / 60.0
+    }
+    
+    /// Convert minutes to hours
+    ///  - Parameter minutes: The amount of minutes to convert
+    ///  - Returns: A tuple with full hours and remainder minutes
+    public static func minutesToHoursAndMinutes(_ minutes: Int) -> (hours: Int, minutes: Int) {
+       let components = DateComponents()
+        
+        let fullHours = minutes / 60
+        let remainder = minutes % 60
+        
+        return (fullHours, remainder)
+    }
 }
