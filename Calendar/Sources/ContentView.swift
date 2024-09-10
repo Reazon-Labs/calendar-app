@@ -1,10 +1,12 @@
 import SwiftUI
 
 public struct ContentView: View {
-    public init() {}
+//    @State private var currentDate = Date()
+//    @State private var presentation = CalendarViewPresentation.week
 
     public var body: some View {
-        Text("Hello pupuce")
+//        CalendarView(currentDate: $currentDate, presentation: $presentation)
+       CalendarWeekView()
     }
 }
 
