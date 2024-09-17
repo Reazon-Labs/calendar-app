@@ -2,22 +2,22 @@ import SwiftUI
 
 let daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
-struct CalendarView: View {
+struct OldCalendarView: View {
     @Binding var currentDate: Date
-    @Binding var presentation: CalendarViewPresentation
+    @Binding var presentation: OldCalendarViewPresentation
     @State private var currentMonth: Int = 0
     
     var body: some View {
         switch presentation {
         case .month:
-            MonthView(currentDate: $currentDate)
+            OldMonthView(currentDate: $currentDate)
         case .week:
-            WeekView()
+            OldWeekView()
         }
     }
 }
 
-struct WeekComponent: View {
+struct OldWeekComponent: View {
     var body: some View {
         ScrollView {
             HStack(spacing: 0) {
@@ -116,7 +116,7 @@ struct WeekComponent: View {
     }
 }
 
-struct WeekView: View {
+struct OldWeekView: View {
     var body: some View {
         VStack {
             HStack {
@@ -128,17 +128,17 @@ struct WeekView: View {
             }
             .padding([.leading], 60)
             
-            WeekComponent()
+            OldWeekComponent()
         }
     }
 }
 
-struct MonthView: View {
+struct OldMonthView: View {
     @Binding var currentDate: Date
     
     var body: some View {
         VStack {
-            ControlHeader(currentDate: $currentDate)
+            OldControlHeader(currentDate: $currentDate)
                 .padding()
             
             HStack {
@@ -181,7 +181,7 @@ struct MonthView: View {
     }
 }
 
-struct ControlHeader: View {
+struct OldControlHeader: View {
     @Binding var currentDate: Date
     
     var body: some View {
@@ -212,20 +212,20 @@ struct ControlHeader: View {
     }
 }
 
-public enum CalendarViewPresentation {
+public enum OldCalendarViewPresentation {
     case month
     case week
 }
 
 
-struct CalendarViewPreview: View {
+struct OldCalendarViewPreview: View {
     @State private var currentDay: Date
-    @State private var presentation: CalendarViewPresentation
+    @State private var presentation: OldCalendarViewPresentation
     var body: some View {
-        CalendarView(currentDate: $currentDay, presentation: $presentation)
+        OldCalendarView(currentDate: $currentDay, presentation: $presentation)
     }
     
-    init(currentDay: Date = Date(), presentation: CalendarViewPresentation = CalendarViewPresentation.month) {
+    init(currentDay: Date = Date(), presentation: OldCalendarViewPresentation = OldCalendarViewPresentation.month) {
         self.currentDay = currentDay
         self.presentation = presentation
     }
@@ -233,13 +233,13 @@ struct CalendarViewPreview: View {
 
 
 #Preview("Month") {
-    CalendarViewPreview()
+    OldCalendarViewPreview()
         .padding()
         .frame(width: 800)
 }
 
 #Preview("Week") {
-    CalendarViewPreview(presentation: .week)
+    OldCalendarViewPreview(presentation: .week)
         .padding()
         .frame(width: 800, height: 600)
 }
