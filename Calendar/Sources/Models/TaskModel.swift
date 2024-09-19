@@ -6,7 +6,7 @@ struct TaskModel {
     var deadline: Date?
     var estimatedTime: Int = 30
     var priority: TaskPriority = .None
-    var doDates: [Date]?
+    var doDateInterval: DateInterval?
     var body: String?
     var isProject: Bool = false
     var subtasks: [TaskModel]?

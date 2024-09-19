@@ -40,15 +40,18 @@ struct CalendarWeekGrid: View {
         estimatedTime: 30
     )
     
-    var columnsLayout: [GridItem] =
-        Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
+    var columnsCount = 7
+    
+    var columnsLayout: [GridItem] {
+        Array(repeating: GridItem(.flexible(), spacing: 0), count: columnsCount)
+    }
     
     
     var body: some View {
         LazyVGrid(columns: columnsLayout, spacing: 0) {
-            ForEach(0..<7) { day in
+            ForEach(0..<columnsCount, id: \.self) { day in
                 ZStack(alignment: .top) {
-                    CalendarWeek()
+                    CalendarDayColumn()
                     
                     if day == 3 {
                         CalendarEventView(task: task1, color: .cyan)
@@ -61,51 +64,23 @@ struct CalendarWeekGrid: View {
     }
 }
 
-struct CalendarDay: View {
+struct CalendarDayColumn: View {
+    var body: some View {
+        VStack(spacing: 0) {
+            ForEach(0..<24) { hour in
+                CalendarDayBox()
+            }
+        }
+    }
+}
+
+struct CalendarDayBox: View {
     var body: some View {
         Rectangle()
             .foregroundStyle(.clear)
             .frame(maxWidth: .infinity)
             .frame(height: 50)
             .border(.black, width: 0.5)
-    }
-}
-
-struct CalendarEventView: View {
-    
-    var task: TaskModel
-    var color: Color
-
-    var body: some View {
-        let components = Calendar.current.dateComponents([.hour, .minute], from: task.deadline!)
-        let deadlineHour: Float = DateUtils.minutesToHours(components.minute!) + Float(components.hour!)
-        let estimatedTimeHour: Float = DateUtils.minutesToHours(task.estimatedTime)
-
-        ZStack(alignment: .topLeading) {
-            Rectangle()
-                .foregroundStyle(color)
-                .clipShape(
-                    .rect(cornerRadius: 6)
-                )
-                .padding(1)
-                .frame(height: CGFloat(estimatedTimeHour) * 50)
-            .opacity(0.8)
-            
-            Text(task.title)
-                .padding(4)
-                .font(.footnote)
-        }
-        .offset(y: CGFloat(deadlineHour) * 50)
-    }
-}
-
-struct CalendarWeek: View {
-    var body: some View {
-        VStack(spacing: 0) {
-            ForEach(0..<24) { hour in
-                CalendarDay()
-            }
-        }
     }
 }
 
@@ -129,6 +104,6 @@ struct HoursColumn: View {
 #Preview {
     CalendarWeekView()
         .padding()
-        .frame(width: 800, height: 600)
+        .frame(width: 600, height: 800)
         .preferredColorScheme(.light)
 }
