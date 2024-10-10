@@ -19,15 +19,15 @@ struct CalendarEventView: View {
                 .padding(1)
                 //.frame(height: CGFloat(estimatedTimeHours) * 50)
             
-            var hue: CGFloat = 0, saturation: CGFloat = 0, brightness: CGFloat = 0
-            let _ = NSColor(red: 0.329, green: 0.745, blue: 0.941, alpha: 1).getHue(&hue, saturation: &saturation,brightness: &brightness, alpha: nil)
+            let cyan = Color(red: 0.329, green: 0.745, blue: 0.941)
+            let darkerCyan = cyan.darker(by: 15)
             VStack(alignment: .leading) {
                 Text(task.title)
                     .font(.callout)
                     .fontWeight(.medium)
                     .truncationMode(.tail)
                     .lineLimit(3)
-                    .foregroundStyle(Color(hue: hue, saturation: saturation, brightness: brightness - 0.15))
+                    .foregroundStyle(darkerCyan)
 
                 if let doDateInterval = task.doDateInterval {
                     let start = doDateInterval.start.formatted(date: .omitted, time: .shortened)
@@ -40,7 +40,7 @@ struct CalendarEventView: View {
                     }
                     .font(.footnote)
                     .fontWeight(.light)
-                    .foregroundStyle(Color(hue: hue, saturation: saturation, brightness: brightness - 0.15))
+                    .foregroundStyle(darkerCyan)
                 }
                 
                 if let deadline = task.deadline {
@@ -50,7 +50,7 @@ struct CalendarEventView: View {
                     }
                     .font(.footnote)
                     .fontWeight(.light)
-                    .foregroundStyle(Color(hue: hue, saturation: saturation, brightness: brightness - 0.15))
+                    .foregroundStyle(darkerCyan)
                 }
             }
             .padding(.vertical, 6)
